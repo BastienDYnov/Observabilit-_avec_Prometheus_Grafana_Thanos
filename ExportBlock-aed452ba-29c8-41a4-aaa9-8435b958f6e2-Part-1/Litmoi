@@ -16,7 +16,7 @@ docker pull prom/prometheus:latest
 
 ![image.png](image.png)
 
-1. Le lancer :
+2. Le lancer :
 
 ```bash
 docker run -d --name prometheus -p 9090:9090 prom/prometheus:latest
@@ -24,15 +24,15 @@ docker run -d --name prometheus -p 9090:9090 prom/prometheus:latest
 
 ![image.png](image%201.png)
 
-1. Ouvrir http://localhost:9090 dans votre navigateur :
+3. Ouvrir http://localhost:9090 dans votre navigateur :
 
 ![image.png](image%202.png)
 
-1. Aller dans Status > Targets et confirmer que la cible prometheus est UP :
+4. Aller dans Status > Targets et confirmer que la cible prometheus est UP :
 
 ![image.png](image%203.png)
 
-1.  Exécuter docker logs prometheus et lire la ligne de démarrage qui annonce le répertoire de stockage :
+5.  Exécuter docker logs prometheus et lire la ligne de démarrage qui annonce le répertoire de stockage :
 
 d’après ce que jevois dans les logs, le seul endroit de stockage qui nous est donnée est “/etc/prometheus/”
 
@@ -46,7 +46,7 @@ d’après ce que jevois dans les logs, le seul endroit de stockage qui nous est
 docker rm -f prometheus
 ```
 
-1. créer un fichier prometheus.yml sur l’hôte avec le fichier monté sur “/etc/prometheus/prometheus.yml” avec les paramètres demander :
+2. créer un fichier prometheus.yml sur l’hôte avec le fichier monté sur “/etc/prometheus/prometheus.yml” avec les paramètres demander :
 
 ```yaml
 global:
@@ -77,7 +77,7 @@ services:
       - '--web.enable-lifecycle'
 ```
 
-1. J’ai lancer le nouveau conteneur : 
+3. J’ai lancer le nouveau conteneur : 
 
 ```bash
 docker compose up -d
@@ -87,7 +87,7 @@ docker compose up -d
 
 ![image.png](image%206.png)
 
-1. j’ai modifier le fichier et déclencher un rechargement:
+4. j’ai modifier le fichier et déclencher un rechargement:
 
 ```yaml
 global:
@@ -195,7 +195,7 @@ services:
 
 ![image.png](image%208.png)
 
-1. J’ai ajouter un nouveau job pour le node dans prometheus.yml :
+2. J’ai ajouter un nouveau job pour le node dans prometheus.yml :
 
 ```yaml
 lobal:
@@ -213,7 +213,7 @@ scrape_configs:
       - targets: ['node-exporter:9100']
 ```
 
-1. J’ai déclencher un rechargement avec : 
+3. J’ai déclencher un rechargement avec : 
 
 ```bash
 curl -X POST http://localhost:9090/-/reload
@@ -221,7 +221,7 @@ curl -X POST http://localhost:9090/-/reload
 
 ![image.png](image%209.png)
 
-1. j’ai exécuter la requête “node_cpu_seconds_total” et j’ai eu ce résultat :
+4. j’ai exécuter la requête “node_cpu_seconds_total” et j’ai eu ce résultat :
 
 ![image.png](image%2010.png)
 
@@ -250,14 +250,14 @@ curl -X POST http://localhost:9090/-/reload
 ]
 ```
 
-1. je l’ai mis dans un dossier sd : 
+2. je l’ai mis dans un dossier sd : 
 
 ```bash
 mkdir /ect/prometheus/sd
 mv targets.json /ect/prometheus/sd/targets.json
 ```
 
-1. J’ai modifier le fichier prometheus.yml pour remplacer les static_configs : 
+3. J’ai modifier le fichier prometheus.yml pour remplacer les static_configs : 
 
 ```yaml
 global:
@@ -306,7 +306,7 @@ Quand je relance le docker j’ai ce résultat :
 
 ![image.png](image%2013.png)
 
-1. Maintenant on vas ajouter ou retirer une cible JSON et voila ce qu’il ce passe :
+4. Maintenant on vas ajouter ou retirer une cible JSON et voila ce qu’il ce passe :
 
 sans le node-explorer :
 
@@ -437,7 +437,7 @@ groups:
 
 ```
 
-1. Je rajoute la rule_file dans “/etc/prometheus/rules/*.yml”
+2. Je rajoute la rule_file dans “/etc/prometheus/rules/*.yml”
 
 ```bash
 global:
